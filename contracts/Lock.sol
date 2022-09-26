@@ -8,8 +8,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract TestTokenExchange is ERC20, Ownable {
     constructor() ERC20("TestTokenExchange", "TTE") {}
 
-    function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
+    function mint() public onlyOwner {
+        _mint(msg.sender, 10000 * 10 ** 18);
     }
 
 }
