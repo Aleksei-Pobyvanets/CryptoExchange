@@ -21,5 +21,9 @@ contract Vendor is Ownable {
     uint256 vendorBalance = yourToken.balanceOf(address(this));
     require(vendorBalance >= amountToBuy, "Vendor has insufficient tokens");
 
+    (bool sent) = yourToken.transfer(msg.sender, amountToBuy);
+    require(sent, "Failed to transfer token to user");
 
+    emit BuyTokens(msg.sender, msg.value, amountToBuy);
+    return amountToBuy;
   }
