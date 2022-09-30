@@ -14,3 +14,12 @@ contract Vendor is Ownable {
     TestTokenExchange = TestToken(tokenAddress);
   }
 
+  function buyTokens() public payable returns (uint256 tokenAmount) {
+    require(msg.value > 0, "You need to send some MATIC to proceed");
+    uint256 amountToBuy = msg.value * tokensPerMatic;
+
+    uint256 vendorBalance = yourToken.balanceOf(address(this));
+    require(vendorBalance >= amountToBuy, "Vendor has insufficient tokens");
+
+
+  }
