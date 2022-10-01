@@ -27,12 +27,20 @@ contract Vendor is Ownable {
     emit BuyTokens(msg.sender, msg.value, amountToBuy);
     return amountToBuy;
   }
-function sellTokens(uint256 tokenAmountToSell) public {
+  function sellTokens(uint256 tokenAmountToSell) public {
 
     require(tokenAmountToSell > 0, "Specify an amount of token greater than zero");
 
     uint256 userBalance = yourToken.balanceOf(msg.sender);
     require(userBalance >= tokenAmountToSell, "You have insufficient tokens");
 
-   
+    uint256 amountOfMATICToTransfer = tokenAmountToSell / tokensPerMatic;
+    uint256 ownerMATICBalance = address(this).balance;
+    require(ownerMATICBalance >= amountOfMATICToTransfer, "Vendor has insufficient funds");
+    (bool sent) = yourToken.transferFrom(msg.sender, address(this), tokenAmountToSell);
+    require(sent, "Failed to transfer tokens from user to vendor");
+
+    (sent,) = msg.sender.call{value: amountOfMATICToTransfer}("");
+    require(sent, "Failed to send MATIC to the user");
   }
+}
