@@ -27,3 +27,12 @@ contract Vendor is Ownable {
     emit BuyTokens(msg.sender, msg.value, amountToBuy);
     return amountToBuy;
   }
+function sellTokens(uint256 tokenAmountToSell) public {
+
+    require(tokenAmountToSell > 0, "Specify an amount of token greater than zero");
+
+    uint256 userBalance = yourToken.balanceOf(msg.sender);
+    require(userBalance >= tokenAmountToSell, "You have insufficient tokens");
+
+   
+  }
