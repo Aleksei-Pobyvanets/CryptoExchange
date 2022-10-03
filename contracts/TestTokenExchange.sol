@@ -43,4 +43,11 @@ contract Vendor is Ownable {
     (sent,) = msg.sender.call{value: amountOfMATICToTransfer}("");
     require(sent, "Failed to send MATIC to the user");
   }
+    function withdraw() public onlyOwner {
+    uint256 ownerBalance = address(this).balance;
+    require(ownerBalance > 0, "No MATIC present in Vendor");
+    (bool sent,) = msg.sender.call{value: address(this).balance}("");
+    require(sent, "Failed to withdraw");
+  }
+}
 }
