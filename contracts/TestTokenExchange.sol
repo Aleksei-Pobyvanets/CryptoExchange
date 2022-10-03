@@ -4,7 +4,7 @@ pragma solidity >=0.7.0 <0.9.0;
 
 import "hardhat/console.sol";
 
-import "Lock.sol";
+// import "Lock.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 contract Vendor is Ownable {
   TestToken TestTokenExchange;
@@ -49,5 +49,4 @@ contract Vendor is Ownable {
     (bool sent,) = msg.sender.call{value: address(this).balance}("");
     require(sent, "Failed to withdraw");
   }
-}
 }
